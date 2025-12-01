@@ -145,7 +145,8 @@
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <span class="item-label">Email</span>
-                    <span class="item-value">contact2bgroup@gmail.com</span>
+                    <!-- Updated email link to work on mobile and desktop -->
+                    <a href="#" id="dynamic-email-link" class="item-value">contact@2bdigital.group</a>
                 </div>
                 <div class="contact-item">
                     <i class="far fa-clock"></i>
@@ -159,7 +160,7 @@
                 </div>
             </div>
             
-            <a href="mailto:contact@2bdigital.group" class="btn btn-dark btn-center">Get in touch</a>
+            <a href="#" class="btn btn-dark btn-center" id="dynamic-email-btn">Get in touch</a>
         </div>
     </section>
 
@@ -263,6 +264,22 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="js/Script.js"></script>
+    <script>
+        // Detect device and update email link dynamically
+        const emailLink = document.getElementById('dynamic-email-link');
+        const emailBtn = document.getElementById('dynamic-email-btn');
+        const emailAddress = 'contact@2bdigital.group';
+        const gmailWeb = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + emailAddress;
+
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+        }
+
+        const finalLink = isMobileDevice() ? `mailto:${emailAddress}` : gmailWeb;
+        emailLink.setAttribute('href', finalLink);
+        emailBtn.setAttribute('href', finalLink);
+    </script>
 </body>
 </html>

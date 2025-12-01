@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     const body = document.body;
 
-    // 1. Efeito na Navbar ao rolar
+    // 1. Navbar scroll effect
     function handleScroll() {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -12,18 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('scroll', handleScroll);
 
-    // 2. Smooth Scroll para links da página
+    // 2. Smooth Scroll for page links
     const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
     smoothScrollLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            // Ignora links vazios ou links do rodapé
+            // Ignore empty links or footer links
             if (href === '#' || this.closest('.footer-links')) return;
 
             e.preventDefault();
             const targetElement = document.querySelector(href);
             if (targetElement) {
-                // Rola compensando a navbar
+                // Scroll offset for navbar
                 window.scrollTo({
                     top: targetElement.offsetTop - 100,
                     behavior: 'smooth'
@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Lógica dos Modais (Termos e Privacidade)
+    // 3. Modals logic (Terms & Privacy)
     const policyLinks = document.querySelectorAll('.footer-links a');
     const closeButtons = document.querySelectorAll('.modal-close');
 
-    // ABRIR
+    // OPEN
     policyLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault(); 
@@ -44,31 +44,53 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetModal = document.getElementById(targetId);
 
             if (targetModal) {
-                targetModal.classList.remove('hidden'); // Garante que display: none saia
-                // Pequeno delay para permitir a transição de opacidade
+                targetModal.classList.remove('hidden'); // Remove display: none
                 setTimeout(() => {
                     targetModal.classList.add('active');
                 }, 10);
                 
-                body.style.overflow = 'hidden'; // Trava a rolagem
+                body.style.overflow = 'hidden'; // Lock scrolling
             }
         });
     });
 
-    // FECHAR
+    // CLOSE
     closeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const modal = this.closest('.modal-overlay');
             if (modal) {
                 modal.classList.remove('active');
-                // Espera a transição de opacidade terminar antes de dar display: none
                 setTimeout(() => {
                     modal.classList.add('hidden');
                 }, 300);
                 
-                body.style.overflow = 'auto'; // Destrava a rolagem
+                body.style.overflow = 'auto'; // Unlock scrolling
             }
         });
     });
+
+    // 4. Dynamic email link for mobile/desktop
+    const emailLink = document.getElementById('dynamic-email-link');
+    const emailBtn = document.getElementById('dynamic-email-btn');
+    const emailAddress = 'contact@2bdigital.group';
+    const gmailWeb = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + emailAddress;
+
+    function isMobileDevice() {
+        return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    }
+
+    if (isMobileDevice()) {
+        // Mobile: mailto normal
+        emailLink.setAttribute('href', `mailto:${emailAddress}`);
+        emailBtn.setAttribute('href', `mailto:${emailAddress}`);
+        emailLink.removeAttribute('target');
+        emailBtn.removeAttribute('target');
+    } else {
+        // Desktop: Gmail web, open in new tab
+        emailLink.setAttribute('href', gmailWeb);
+        emailBtn.setAttribute('href', gmailWeb);
+        emailLink.setAttribute('target', '_blank');
+        emailBtn.setAttribute('target', '_blank');
+    }
 });
