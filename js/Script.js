@@ -71,4 +71,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+
+
+});
+
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const closeMenuBtn = document.querySelector('.close-menu');
+
+hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+});
+
+closeMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = 'auto';
+});
+
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = 'auto';
+    });
 });
