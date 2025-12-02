@@ -233,3 +233,38 @@ section { padding: var(--spacing-huge) 0; }
 @media (max-width: 600px) {
     .grid-4-col, .grid-2-col { grid-template-columns: 1fr !important; }
 }
+
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left p {
+    margin: 3px 0;
+    text-align: left;
+}
+
+.company-address {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
+
+    .footer-left p {
+        text-align: center;
+    }
+}
+
+
